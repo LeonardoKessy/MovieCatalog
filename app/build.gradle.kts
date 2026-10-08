@@ -48,10 +48,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.retrofit.core)
+    implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx)
     implementation(libs.coil.compose)
-    implementation(libs.coil.network)
 
 
     testImplementation(libs.junit)
