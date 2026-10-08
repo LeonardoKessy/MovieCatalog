@@ -1,6 +1,6 @@
 package com.seminario.moviecatalog.data.remote.dto
 
-import com.seminario.moviecatalog.data.remote.TmdbApi
+import com.seminario.moviecatalog.data.remote.api.TmdbApiConstants
 import com.seminario.moviecatalog.domain.model.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -44,7 +44,7 @@ fun CatalogMovieDto.toDomain() : Movie {
         id = this.id,
         title = this.title,
         overview = this.overview,
-        posterPath =  "${TmdbApi.IMAGE_BASE_URL}${this.posterPath}",
+        posterPath =  "${TmdbApiConstants.IMAGE_BASE_URL}${this.posterPath}",
         rating = this.rating
     )
 }

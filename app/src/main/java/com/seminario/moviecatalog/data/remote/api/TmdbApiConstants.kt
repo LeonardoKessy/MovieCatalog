@@ -1,6 +1,6 @@
-package com.seminario.moviecatalog.data.remote
+package com.seminario.moviecatalog.data.remote.api
 
-object TmdbApi {
+object TmdbApiConstants {
     const val API_BASE_URL = "https://api.themoviedb.org/3/"
     const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/"
 }
