@@ -18,13 +18,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogScreen(
-
+    viewModel: CatalogViewModel = hiltViewModel()
 ) {
+    val movieFetchState = viewModel.movieFetchState;
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -52,7 +55,9 @@ fun CatalogScreen(
         ) {
 
             Spacer(
-                Modifier.height(16.dp).fillMaxWidth()
+                Modifier
+                    .height(16.dp)
+                    .fillMaxWidth()
             )
 
             Text(
