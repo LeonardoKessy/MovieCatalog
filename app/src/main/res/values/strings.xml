@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Movie Catalog</string>
+    <string name="catalog_header">The Movie Catalog</string>
+    <string name="catalog_error">Something went wrong fetching movies</string>
 </resources>

@@ -16,9 +16,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.seminario.moviecatalog.R
 import com.seminario.moviecatalog.ui.mock.MockData
 import com.seminario.moviecatalog.ui.screens.shared.components.ErrorCard
 import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
@@ -52,7 +54,7 @@ fun CatalogContent(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Movie catalog",
+                        text = stringResource(R.string.catalog_header),
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         style = MaterialTheme.typography.titleSmall
                     )
@@ -81,12 +83,14 @@ fun CatalogContent(
                 }
 
                 is MovieFetchState.Success -> {
-                    Text(text = "Success")
+                    CatalogGrid(
+                        movies = movieFetchState.movies
+                    )
                 }
 
                 is MovieFetchState.Error -> {
                     ErrorCard(
-                        message = "Error has occurred fetching movies",
+                        message = "${R.string.catalog_error}",
                         onRetry = onRetry
                     )
                 }
