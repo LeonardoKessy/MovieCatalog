@@ -14,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,8 +33,7 @@ fun CatalogScreen(
     viewModel: CatalogViewModel = hiltViewModel()
 ) {
 
-    val movieFetchState = viewModel.moviesFetchState
-    if (movieFetchState is MoviesFetchState.Success) println(movieFetchState.movies)
+    val movieFetchState by viewModel.moviesFetchState.collectAsState()
 
     CatalogContent(
         moviesFetchState = movieFetchState,
@@ -44,12 +45,10 @@ fun CatalogScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogContent(
-    moviesFetchState: MoviesFetchState,
+    moviesFetchState : MoviesFetchState,
     onRetry: () -> Unit,
     onMovieClick: (String) -> Unit
 ) {
-
-    println(moviesFetchState)
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
