@@ -43,7 +43,6 @@ fun CatalogMovieDto.toDomain() : Movie {
     return Movie(
         id = this.id,
         title = this.title,
-        overview = this.overview,
         posterPath =  "${TmdbApiConstants.IMAGE_BASE_URL}${this.posterPath}",
         rating = this.rating
     )
