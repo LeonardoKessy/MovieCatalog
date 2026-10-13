@@ -35,7 +35,8 @@ import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
 
 @Composable
 fun CatalogCard(
-    movie: Movie
+    movie: Movie,
+    onClick : (String) -> Unit
 ) {
 
     Card(
@@ -48,7 +49,8 @@ fun CatalogCard(
             )
             .defaultMinSize(
                 minWidth = 160.dp
-            )
+            ),
+        onClick = { onClick(movie.id.toString()) }
     ) {
 
         Column(
@@ -105,7 +107,8 @@ fun CatalogCard(
 fun CatalogCardPreview() {
     MovieCatalogTheme {
         CatalogCard(
-            movie = MockData.singleMovie
+            movie = MockData.singleMovie,
+            onClick = {}
         )
     }
 }

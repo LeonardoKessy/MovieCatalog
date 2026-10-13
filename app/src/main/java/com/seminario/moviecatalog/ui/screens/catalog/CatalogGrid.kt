@@ -17,7 +17,8 @@ import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
 
 @Composable
 fun CatalogGrid(
-    movies : List<Movie>
+    movies : List<Movie>,
+    onMovieClick : (String) -> Unit
 ) {
 
     LazyVerticalGrid(
@@ -29,7 +30,10 @@ fun CatalogGrid(
     ) {
 
         items(movies) { movie ->
-            CatalogCard(movie = movie)
+            CatalogCard(
+                movie = movie,
+                onClick = onMovieClick
+            )
         }
     }
 
@@ -50,7 +54,8 @@ fun CatalogGrid(
 fun CatalogGridPreview() {
     MovieCatalogTheme {
         CatalogGrid(
-            movies = MockData.movies
+            movies = MockData.movies,
+            onMovieClick = {}
         )
     }
 }

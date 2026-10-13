@@ -16,7 +16,7 @@ class CatalogViewModel @Inject constructor(
     private val repository: MovieRepository
 ) : ViewModel() {
 
-    var movieFetchState by mutableStateOf<MovieFetchState>(MovieFetchState.Loading)
+    var moviesFetchState by mutableStateOf<MoviesFetchState>(MoviesFetchState.Loading)
         private set
 
 
@@ -26,22 +26,22 @@ class CatalogViewModel @Inject constructor(
 
     fun getMovies() {
         viewModelScope.launch {
-            movieFetchState = MovieFetchState.Loading
+            moviesFetchState = MoviesFetchState.Loading
 
             try {
                 val movies: List<Movie> = repository.getPopularMovies();
 
-                movieFetchState = MovieFetchState.Success(movies)
+                moviesFetchState = MoviesFetchState.Success(movies)
 
             } catch (e: Exception) {
-                movieFetchState = MovieFetchState.Error(e.message ?: "Unknown error")
+                moviesFetchState = MoviesFetchState.Error(e.message ?: "Unknown error")
             }
         }
     }
 }
 
-sealed class MovieFetchState {
-    object Loading : MovieFetchState()
-    data class Success(val movies: List<Movie>) : MovieFetchState()
-    data class Error(val message: String) : MovieFetchState()
+sealed class MoviesFetchState {
+    object Loading : MoviesFetchState()
+    data class Success(val movies: List<Movie>) : MoviesFetchState()
+    data class Error(val message: String) : MoviesFetchState()
 }

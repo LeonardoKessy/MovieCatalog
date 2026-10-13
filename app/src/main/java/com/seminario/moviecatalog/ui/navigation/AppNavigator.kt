@@ -1,10 +1,13 @@
 package com.seminario.moviecatalog.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.seminario.moviecatalog.ui.screens.catalog.CatalogScreen
+import com.seminario.moviecatalog.ui.screens.detail.DetailScreen
 
 @Composable
 fun AppNavigator() {
@@ -15,14 +18,24 @@ fun AppNavigator() {
         composable(
             route = "catalog"
         ) {
-            CatalogScreen()
+            CatalogScreen(
+                onMovieClick = { movieId ->
+                    navController.navigate("detail/$movieId")
+                }
+            )
         }
 
         composable(
-            route = "detail/{id}"
+            route = "detail/{movieId}",
+            arguments = listOf(
+                navArgument("movieId") { type = NavType.IntType }
+            )
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getString("id")
+            val id = backStackEntry.arguments?.getInt("movieId") ?: return@composable
 
+            DetailScreen(
+                movieId = id
+            )
         }
 
     }

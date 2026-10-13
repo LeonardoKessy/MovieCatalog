@@ -27,26 +27,29 @@ import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
 
 @Composable
 fun CatalogScreen(
+    onMovieClick: (String) -> Unit,
     viewModel: CatalogViewModel = hiltViewModel()
 ) {
 
-    val movieFetchState = viewModel.movieFetchState
-    if (movieFetchState is MovieFetchState.Success) println(movieFetchState.movies)
+    val movieFetchState = viewModel.moviesFetchState
+    if (movieFetchState is MoviesFetchState.Success) println(movieFetchState.movies)
 
     CatalogContent(
-        movieFetchState = movieFetchState,
-        onRetry = { viewModel.getMovies() }
+        moviesFetchState = movieFetchState,
+        onRetry = { viewModel.getMovies() },
+        onMovieClick = onMovieClick
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogContent(
-    movieFetchState: MovieFetchState,
-    onRetry: () -> Unit
+    moviesFetchState: MoviesFetchState,
+    onRetry: () -> Unit,
+    onMovieClick: (String) -> Unit
 ) {
 
-    println(movieFetchState)
+    println(moviesFetchState)
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -56,7 +59,7 @@ fun CatalogContent(
                     Text(
                         text = stringResource(R.string.catalog_header),
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        style = MaterialTheme.typography.titleSmall
+                        style = MaterialTheme.typography.titleMedium
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -74,21 +77,22 @@ fun CatalogContent(
             contentAlignment = Alignment.Center
         ) {
 
-            when (movieFetchState) {
-                is MovieFetchState.Loading -> {
+            when (moviesFetchState) {
+                is MoviesFetchState.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.width(64.dp),
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
 
-                is MovieFetchState.Success -> {
+                is MoviesFetchState.Success -> {
                     CatalogGrid(
-                        movies = movieFetchState.movies
+                        movies = moviesFetchState.movies,
+                        onMovieClick = onMovieClick
                     )
                 }
 
-                is MovieFetchState.Error -> {
+                is MoviesFetchState.Error -> {
                     ErrorCard(
                         message = "${R.string.catalog_error}",
                         onRetry = onRetry
@@ -117,8 +121,9 @@ fun CatalogContent(
 fun CatalogScreenPreview() {
     MovieCatalogTheme {
         CatalogContent(
-            movieFetchState = MovieFetchState.Success(movies = MockData.movies),
-            onRetry = {}
+            moviesFetchState = MoviesFetchState.Success(movies = MockData.movies),
+            onRetry = {},
+            onMovieClick = {}
         )
     }
 }
