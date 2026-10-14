@@ -1,6 +1,6 @@
 package com.seminario.moviecatalog.domain.model
 
-class MovieDetail(
+data class MovieDetail(
     val id: Int,
     val title: String,
     val overview: String,

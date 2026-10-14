@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.seminario.moviecatalog.ui.screens.catalog.CatalogScreen
 import com.seminario.moviecatalog.ui.screens.detail.DetailScreen
 
@@ -34,7 +35,7 @@ fun AppNavigator() {
             val id = backStackEntry.arguments?.getInt("movieId") ?: return@composable
 
             DetailScreen(
-                movieId = id
+                goBack = { navController.popBackStack() }
             )
         }
 

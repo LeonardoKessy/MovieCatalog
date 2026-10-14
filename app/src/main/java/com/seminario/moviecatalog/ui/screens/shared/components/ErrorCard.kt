@@ -28,7 +28,8 @@ import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
 @Composable
 fun ErrorCard(
     message: String = "Something went wrong",
-    onRetry: () -> Unit = {}
+    onRetry: () -> Unit = {},
+    buttonMessage: String = "Try Again"
 ) {
     OutlinedCard (
         shape = RoundedCornerShape(8.dp),
@@ -84,7 +85,7 @@ fun ErrorCard(
             ) {
                 Text(
                     color = MaterialTheme.colorScheme.onError,
-                    text = "Try Again"
+                    text = buttonMessage
                 )
             }
         }
