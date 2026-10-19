@@ -5,8 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.seminario.moviecatalog.R
 import com.seminario.moviecatalog.domain.model.Movie
 import com.seminario.moviecatalog.domain.repository.MovieRepository
+import com.seminario.moviecatalog.ui.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +39,7 @@ class CatalogViewModel @Inject constructor(
                 _moviesFetchState.value = MoviesFetchState.Success(movies)
 
             } catch (e: Exception) {
-                _moviesFetchState.value = MoviesFetchState.Error(e.message ?: "Unknown error")
+                _moviesFetchState.value = MoviesFetchState.Error(UiText.StringResource(R.string.catalog_error))
             }
         }
     }
@@ -46,5 +48,5 @@ class CatalogViewModel @Inject constructor(
 sealed class MoviesFetchState {
     object Loading : MoviesFetchState()
     data class Success(val movies: List<Movie>) : MoviesFetchState()
-    data class Error(val message: String) : MoviesFetchState()
+    data class Error(val message: UiText) : MoviesFetchState()
 }

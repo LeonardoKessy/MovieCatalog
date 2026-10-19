@@ -82,12 +82,12 @@ fun DetailContent(
                 }
 
                 is MovieFetchState.Success -> {
-
+                    DetailContent(movieFetchState.movie)
                 }
 
                 is MovieFetchState.Error -> {
                     ErrorCard(
-                        message = movieFetchState.message,
+                        message = movieFetchState.message.asString(),
                         onRetry = goBack,
                         buttonMessage = "Go Back"
                     )

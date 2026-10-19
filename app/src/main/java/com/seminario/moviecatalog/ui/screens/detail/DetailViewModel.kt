@@ -6,9 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.seminario.moviecatalog.R
 import com.seminario.moviecatalog.domain.model.Movie
 import com.seminario.moviecatalog.domain.model.MovieDetail
 import com.seminario.moviecatalog.domain.repository.MovieRepository
+import com.seminario.moviecatalog.ui.util.UiText
+import com.seminario.moviecatalog.ui.util.UiText.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +36,7 @@ class DetailViewModel @Inject constructor(
         val movieId = savedStateHandle.get<Int>("movieId") ?: -1
 
         if (movieId != -1) getMovie(movieId)
-        else _movieFetchState.value = MovieFetchState.Error("Movie not found")
+        else _movieFetchState.value = MovieFetchState.Error(StringResource(R.string.movie_error))
     }
 
 
@@ -43,7 +46,7 @@ class DetailViewModel @Inject constructor(
                 val movie = repository.getMovie(id)
                 _movieFetchState.value = MovieFetchState.Success(movie)
             } catch (e: Exception) {
-                _movieFetchState.value = MovieFetchState.Error(e.message ?: "Unknown error")
+                _movieFetchState.value = MovieFetchState.Error(StringResource(R.string.unknown_error))
             }
         }
     }
@@ -54,5 +57,5 @@ class DetailViewModel @Inject constructor(
 sealed class MovieFetchState {
     object Loading : MovieFetchState()
     data class Success(val movie: MovieDetail) : MovieFetchState()
-    data class Error(val message: String) : MovieFetchState()
+    data class Error(val message: UiText) : MovieFetchState()
 }

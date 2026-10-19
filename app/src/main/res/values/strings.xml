@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Movie Catalog</string>
     <string name="catalog_header">The Movie Catalog</string>
+
     <string name="catalog_error">Something went wrong fetching movies</string>
+    <string name="movie_error">Could not find the selected movie</string>
+    <string name="unknown_error">An unknown error occurred</string>
+
+    <string name="genres">Genres</string>
+    <string name="overview">Overview</string>
+    <string name="producers">Producers</string>
+    <string name="release_date">Release Date</string>
 </resources>

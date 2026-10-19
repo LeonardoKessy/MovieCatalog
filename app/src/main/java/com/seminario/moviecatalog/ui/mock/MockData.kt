@@ -9,7 +9,7 @@ object MockData {
         id = 1291595,
         title = "Insidious: Out of the Further",
         overview = "Gemma, a young mother raising her daughter in the house she grew up in, discovers she can travel into The Further, the purgatorial realm of lost souls at the heart of the Insidious universe. When something evil comes after her, Gemma discovers an ability that changes everything: she doesn't just enter The Further, she can bring what lives there back to the real world. Once the demons realize her power, our world becomes their playground.",
-        backdropPath = "/p40lmrdI4blcAPZQMTPaiy5v5Ym.jpg",
+        backdropPath = "https://image.tmdb.org/t/p/w500/p40lmrdI4blcAPZQMTPaiy5v5Ym.jpg",
         rating = 7.7,
         releaseDate = "2026-08-19",
         genres = listOf("Horror", "Thriller"),

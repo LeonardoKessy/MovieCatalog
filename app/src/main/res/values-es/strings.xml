@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Movie Catalog</string>
+    <string name="catalog_header">The Movie Catalog</string>
+    
+    <string name="catalog_error">Algo salio mal buscando las peliculas</string>
+    <string name="movie_error">No se encontro la película seleccionada</string>
+    <string name="unknown_error">Ocurrio un error desconocido</string>"
+    
+    <string name="genres">Generos</string>
+    <string name="overview">Sinopsis</string>
+    <string name="producers">Productores</string>
+    <string name="release_date">Fecha de estreno</string>
+</resources>

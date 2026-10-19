@@ -1,5 +1,6 @@
 package com.seminario.moviecatalog.data.remote.dto
 
+import com.seminario.moviecatalog.data.remote.api.TmdbApiConstants
 import com.seminario.moviecatalog.domain.model.MovieDetail
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -52,7 +53,7 @@ fun MovieDetailDto.toDomain() : MovieDetail {
         id = this.id,
         title = this.title,
         overview = this.overview,
-        backdropPath = this.backdropPath,
+        backdropPath = "${TmdbApiConstants.IMAGE_BASE_URL}${this.backdropPath}",
         rating = this.rating,
         releaseDate = this.releaseDate,
         genres = this.genres.map { it.name },
