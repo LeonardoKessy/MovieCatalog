@@ -108,7 +108,7 @@ fun CatalogContent(
         Box(
             modifier = Modifier
                 .padding(
-                    top = innerPadding.calculateTopPadding().plus(75.dp)
+                    top = innerPadding.calculateTopPadding().plus(80.dp)
                 )
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
