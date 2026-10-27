@@ -2,13 +2,21 @@ package com.seminario.moviecatalog.ui.screens.catalog
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -34,11 +42,14 @@ fun CatalogScreen(
 ) {
 
     val movieFetchState by viewModel.moviesFetchState.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
 
     CatalogContent(
         moviesFetchState = movieFetchState,
         onRetry = { viewModel.getMovies() },
-        onMovieClick = onMovieClick
+        onMovieClick = onMovieClick,
+        searchQuery = searchQuery,
+        onSearchQueryChange = viewModel::onSearchQueryChange
     )
 }
 
@@ -47,7 +58,10 @@ fun CatalogScreen(
 fun CatalogContent(
     moviesFetchState : MoviesFetchState,
     onRetry: () -> Unit,
-    onMovieClick: (String) -> Unit
+    onMovieClick: (String) -> Unit,
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit
+
 ) {
 
     Scaffold(
@@ -68,9 +82,34 @@ fun CatalogContent(
         }
     ) { innerPadding ->
 
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { onSearchQueryChange(it) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = innerPadding.calculateTopPadding().plus(16.dp),
+                    start = 16.dp,
+                    end = 16.dp
+                )
+                .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
+                .background(color = MaterialTheme.colorScheme.surfaceContainer),
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.search_placeholder),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            },
+            singleLine = true,
+            shape = RoundedCornerShape(10.dp),
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search bar") }
+        )
+
         Box(
             modifier = Modifier
-                .padding(innerPadding)
+                .padding(
+                    top = innerPadding.calculateTopPadding().plus(75.dp)
+                )
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background),
             contentAlignment = Alignment.Center
@@ -85,10 +124,18 @@ fun CatalogContent(
                 }
 
                 is MoviesFetchState.Success -> {
-                    CatalogGrid(
-                        movies = moviesFetchState.movies,
-                        onMovieClick = onMovieClick
-                    )
+                    if (moviesFetchState.movies.isEmpty()) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = stringResource(R.string.no_results_found))
+                        }
+                    } else {
+                        CatalogGrid(
+                            movies = moviesFetchState.movies,
+                            onMovieClick = onMovieClick,
+                        )
+                    }
                 }
 
                 is MoviesFetchState.Error -> {
@@ -122,7 +169,9 @@ fun CatalogScreenPreview() {
         CatalogContent(
             moviesFetchState = MoviesFetchState.Success(movies = MockData.movies),
             onRetry = {},
-            onMovieClick = {}
+            onMovieClick = {},
+            searchQuery = "",
+            onSearchQueryChange = {}
         )
     }
 }

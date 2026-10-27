@@ -32,4 +32,9 @@ class MovieRepositoryImpl @Inject constructor(
         return response.results.map { it.toDomain() } ?: emptyList()
     }
 
+    override suspend fun getMoviesByQuery(query: String): List<Movie> {
+       val response : CatalogListDto = api.searchMovies(query = query)
+
+       return response.results.map { it.toDomain() }
+    }
 }

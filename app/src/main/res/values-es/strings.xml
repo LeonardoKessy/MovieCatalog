@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Movie Catalog</string>
     <string name="catalog_header">The Movie Catalog</string>
-    
+
+    <string name="no_results_found">No se encontraron resultados</string>
+
     <string name="catalog_error">Algo salio mal buscando las peliculas</string>
     <string name="movie_error">No se encontro la película seleccionada</string>
     <string name="unknown_error">Ocurrio un error desconocido</string>"
@@ -12,4 +14,7 @@
     <string name="release_date">Fecha de estreno</string>
     <string name="share_movie_message">Mira esta película: %1$s! \n\n %2$s</string>
     <string name="similar_movies">Peliculas Similares</string>
+
+
+    <string name="search_placeholder">Busca una película…</string>
 </resources>

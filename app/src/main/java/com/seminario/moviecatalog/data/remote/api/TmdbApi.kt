@@ -4,6 +4,7 @@ import com.seminario.moviecatalog.data.remote.dto.CatalogListDto
 import com.seminario.moviecatalog.data.remote.dto.MovieDetailDto
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface TmdbApi {
 
@@ -18,5 +19,10 @@ interface TmdbApi {
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilarMovies(
         @Path("movie_id") movieId: Int
+    ) : CatalogListDto
+
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("query") query: String
     ) : CatalogListDto
 }

@@ -2,6 +2,8 @@
     <string name="app_name">Movie Catalog</string>
     <string name="catalog_header">The Movie Catalog</string>
 
+    <string name="no_results_found">No results found</string>
+
     <string name="catalog_error">Something went wrong fetching movies</string>
     <string name="movie_error">Could not find the selected movie</string>
     <string name="unknown_error">An unknown error occurred</string>
@@ -12,4 +14,6 @@
     <string name="release_date">Release Date</string>
     <string name="share_movie_message">Watch this movie: %1$s! \n\n %2$s</string>
     <string name="similar_movies">Similar Movies</string>
+
+    <string name="search_placeholder">Search for a movie…</string>
 </resources>

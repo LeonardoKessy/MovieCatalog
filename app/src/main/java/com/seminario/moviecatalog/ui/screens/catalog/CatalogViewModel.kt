@@ -25,6 +25,9 @@ class CatalogViewModel @Inject constructor(
     val moviesFetchState : StateFlow<MoviesFetchState> = _moviesFetchState.asStateFlow()
 
 
+    private var _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
     init {
         getMovies()
     }
@@ -38,6 +41,25 @@ class CatalogViewModel @Inject constructor(
 
                 _moviesFetchState.value = MoviesFetchState.Success(movies)
 
+            } catch (e: Exception) {
+                _moviesFetchState.value = MoviesFetchState.Error(UiText.StringResource(R.string.catalog_error))
+            }
+        }
+    }
+
+    fun onSearchQueryChange(query: String) {
+        _searchQuery.value = query
+
+        viewModelScope.launch {
+            _moviesFetchState.value = MoviesFetchState.Loading
+
+            try {
+                val movies = if (query.isBlank()) {
+                    repository.getPopularMovies()
+                } else {
+                    repository.getMoviesByQuery(query)
+                }
+                _moviesFetchState.value = MoviesFetchState.Success(movies)
             } catch (e: Exception) {
                 _moviesFetchState.value = MoviesFetchState.Error(UiText.StringResource(R.string.catalog_error))
             }
