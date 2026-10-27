@@ -11,4 +11,5 @@
     <string name="producers">Producers</string>
     <string name="release_date">Release Date</string>
     <string name="share_movie_message">Watch this movie: %1$s! \n\n %2$s</string>
+    <string name="similar_movies">Similar Movies</string>
 </resources>

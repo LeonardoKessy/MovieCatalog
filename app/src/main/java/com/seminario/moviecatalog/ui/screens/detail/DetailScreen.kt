@@ -92,7 +92,8 @@ fun DetailContent(
                 is MovieFetchState.Success -> {
                     DetailContent(
                         movieFetchState.movie,
-                        similarMovies = similarMovies
+                        similarMovies = similarMovies,
+                        navigateSimilarMovie = navigateToMovie
                     )
                 }
 

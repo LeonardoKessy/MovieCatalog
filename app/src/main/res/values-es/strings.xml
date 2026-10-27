@@ -11,4 +11,5 @@
     <string name="producers">Productores</string>
     <string name="release_date">Fecha de estreno</string>
     <string name="share_movie_message">Mira esta película: %1$s! \n\n %2$s</string>
+    <string name="similar_movies">Peliculas Similares</string>
 </resources>

@@ -33,7 +33,7 @@ data class CatalogMovieDto(
     val overview: String,
 
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
 
     @SerialName("vote_average")
     val rating: Double
@@ -43,7 +43,7 @@ fun CatalogMovieDto.toDomain() : Movie {
     return Movie(
         id = this.id,
         title = this.title,
-        posterPath =  "${TmdbApiConstants.IMAGE_BASE_URL}${this.posterPath}",
+        posterPath = this.posterPath?.let { "${TmdbApiConstants.IMAGE_BASE_URL}$it" } ?: "",
         rating = this.rating
     )
 }

@@ -1,6 +1,7 @@
 package com.seminario.moviecatalog.ui.screens.detail
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,12 +12,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -46,7 +50,8 @@ import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
 @Composable
 fun DetailContent(
     movie : MovieDetail,
-    similarMovies: List<Movie>
+    similarMovies: List<Movie>,
+    navigateSimilarMovie: (Int) -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -192,6 +197,43 @@ fun DetailContent(
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.bodyMedium
         )
+
+
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Start,
+            text = stringResource(R.string.similar_movies) + ":",
+            color = MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.titleMedium
+        )
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(similarMovies) { movie ->
+                Card(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(150.dp)
+                        .background(MaterialTheme.colorScheme.surface),
+                    onClick = { navigateSimilarMovie(movie.id) }
+                ) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(movie.posterPath)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = "${movie.title}'s poster",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(8.dp)),
+                        placeholder = painterResource(R.drawable.ic_card_plaholder),
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -210,7 +252,8 @@ fun DetailContentPreview() {
     MovieCatalogTheme {
         DetailContent(
             movie = MockData.movieDetail,
-            similarMovies = MockData.movies
+            similarMovies = MockData.movies,
+            navigateSimilarMovie = {}
         )
     }
 }
