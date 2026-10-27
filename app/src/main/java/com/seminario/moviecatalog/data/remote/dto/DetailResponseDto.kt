@@ -32,7 +32,10 @@ data class MovieDetailDto(
     val genres: List<GenreDto>,
 
     @SerialName("production_companies")
-    val productionCompanies: List<ProductionCompanyDto>
+    val productionCompanies: List<ProductionCompanyDto>,
+
+    @SerialName("homepage")
+    val homepageUrl: String?
 )
 
 @Serializable
@@ -57,6 +60,7 @@ fun MovieDetailDto.toDomain() : MovieDetail {
         rating = this.rating,
         releaseDate = this.releaseDate,
         genres = this.genres.map { it.name },
-        producers = this.productionCompanies.map { it.name }
+        producers = this.productionCompanies.map { it.name },
+        homepageUrl = this.homepageUrl
     );
 }

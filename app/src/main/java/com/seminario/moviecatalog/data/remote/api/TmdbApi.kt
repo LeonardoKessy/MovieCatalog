@@ -15,4 +15,8 @@ interface TmdbApi {
         @Path("movie_id") movieId: Int
     ) : MovieDetailDto
 
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMovies(
+        @Path("movie_id") movieId: Int
+    ) : CatalogListDto
 }

@@ -13,7 +13,8 @@ object MockData {
         rating = 7.7,
         releaseDate = "2026-08-19",
         genres = listOf("Horror", "Thriller"),
-        producers = listOf("Screen Gems", "Stage 6 Films", "Atomic Monster", "TSG Entertainment", "Oren Peli Productions", "Blumhouse Atomic Monster")
+        producers = listOf("Screen Gems", "Stage 6 Films", "Atomic Monster", "TSG Entertainment", "Oren Peli Productions", "Blumhouse Atomic Monster"),
+        homepageUrl = null
     )
 
     val singleMovie = Movie(

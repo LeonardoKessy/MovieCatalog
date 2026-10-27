@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.seminario.moviecatalog.R
+import com.seminario.moviecatalog.domain.model.Movie
 import com.seminario.moviecatalog.ui.mock.MockData
 import com.seminario.moviecatalog.ui.screens.shared.components.ErrorCard
 import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
@@ -29,14 +30,19 @@ import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
 @Composable
 fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel(),
-    goBack: () -> Unit
+    goBack: () -> Unit,
+    navigateToMovie: (Int) -> Unit
 ) {
 
     val movieFetchState by viewModel.movieFetchState.collectAsState()
 
+    val similarMovies by viewModel.similarMovies.collectAsState()
+
     DetailContent(
         movieFetchState = movieFetchState,
-        goBack = goBack
+        goBack = goBack,
+        similarMovies = similarMovies,
+        navigateToMovie = navigateToMovie
     )
 
 }
@@ -45,7 +51,9 @@ fun DetailScreen(
 @Composable
 fun DetailContent(
     movieFetchState: MovieFetchState,
-    goBack: () -> Unit
+    goBack: () -> Unit,
+    similarMovies: List<Movie>,
+    navigateToMovie: (Int) -> Unit
 ) {
 
     Scaffold(
@@ -82,7 +90,10 @@ fun DetailContent(
                 }
 
                 is MovieFetchState.Success -> {
-                    DetailContent(movieFetchState.movie)
+                    DetailContent(
+                        movieFetchState.movie,
+                        similarMovies = similarMovies
+                    )
                 }
 
                 is MovieFetchState.Error -> {
@@ -115,7 +126,9 @@ fun DetailScreenPreview() {
     MovieCatalogTheme {
         DetailContent(
             movieFetchState = MovieFetchState.Success(MockData.movieDetail),
-            goBack = {}
+            goBack = {},
+            similarMovies = MockData.movies,
+            navigateToMovie = {}
         )
     }
 }

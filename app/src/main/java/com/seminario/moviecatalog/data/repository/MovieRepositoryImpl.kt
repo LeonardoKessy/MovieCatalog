@@ -26,4 +26,10 @@ class MovieRepositoryImpl @Inject constructor(
         return response.toDomain()
     }
 
+    override suspend fun getSimilarMovies(id: Int): List<Movie> {
+        val response : CatalogListDto = api.getSimilarMovies(movieId = id)
+
+        return response.results.map { it.toDomain() } ?: emptyList()
+    }
+
 }

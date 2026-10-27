@@ -29,13 +29,20 @@ class DetailViewModel @Inject constructor(
     private val _movieFetchState : MutableStateFlow<MovieFetchState> = MutableStateFlow(MovieFetchState.Loading)
     val movieFetchState : StateFlow<MovieFetchState> = _movieFetchState.asStateFlow()
 
+    private val _similarMovies : MutableStateFlow<List<Movie>> = MutableStateFlow(emptyList())
+    val similarMovies : StateFlow<List<Movie>> = _similarMovies.asStateFlow()
+
+
 
     init {
         _movieFetchState.value = MovieFetchState.Loading
 
         val movieId = savedStateHandle.get<Int>("movieId") ?: -1
 
-        if (movieId != -1) getMovie(movieId)
+        if (movieId != -1) {
+            getMovie(movieId)
+            getSimilarMovies(movieId)
+        }
         else _movieFetchState.value = MovieFetchState.Error(StringResource(R.string.movie_error))
     }
 
@@ -48,6 +55,13 @@ class DetailViewModel @Inject constructor(
             } catch (e: Exception) {
                 _movieFetchState.value = MovieFetchState.Error(StringResource(R.string.unknown_error))
             }
+        }
+    }
+
+    private fun getSimilarMovies(id: Int) {
+        viewModelScope.launch {
+            val movies = repository.getSimilarMovies(id)
+            _similarMovies.value = movies
         }
     }
 

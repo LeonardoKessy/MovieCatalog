@@ -35,7 +35,10 @@ fun AppNavigator() {
             val id = backStackEntry.arguments?.getInt("movieId") ?: return@composable
 
             DetailScreen(
-                goBack = { navController.popBackStack() }
+                goBack = { navController.popBackStack() },
+                navigateToMovie = { movieId ->
+                    navController.navigate("detail/$movieId")
+                }
             )
         }
 

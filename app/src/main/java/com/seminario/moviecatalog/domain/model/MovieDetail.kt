@@ -8,6 +8,7 @@ data class MovieDetail(
     val rating: Double,
     val releaseDate: String,
     val genres: List<String>,
-    val producers: List<String>
+    val producers: List<String>,
+    val homepageUrl: String?
 ) {
 }

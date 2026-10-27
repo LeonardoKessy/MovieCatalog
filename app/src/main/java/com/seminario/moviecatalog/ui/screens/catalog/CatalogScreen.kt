@@ -93,7 +93,7 @@ fun CatalogContent(
 
                 is MoviesFetchState.Error -> {
                     ErrorCard(
-                        message = "${R.string.catalog_error}",
+                        message = stringResource(R.string.catalog_error),
                         onRetry = onRetry
                     )
                 }

@@ -12,6 +12,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import java.util.Locale
 import javax.inject.Singleton
 
 @Module
@@ -22,12 +23,23 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
+            // Auth
             .addInterceptor { chain ->
-                val request = chain.request().newBuilder()
+                val originalRequest = chain.request()
+
+                val language = Locale.getDefault().language
+
+                val newUrl = originalRequest.url.newBuilder()
+                    .addQueryParameter("language", language)
+                    .build()
+
+                val newRequest = originalRequest.newBuilder()
+                    .url(newUrl)
                     .addHeader("Authorization", "Bearer ${BuildConfig.TMDB_API_KEY}")
                     .addHeader("accept", "application/json")
                     .build()
-                chain.proceed(request)
+
+                chain.proceed(newRequest)
             }
             .build()
     }

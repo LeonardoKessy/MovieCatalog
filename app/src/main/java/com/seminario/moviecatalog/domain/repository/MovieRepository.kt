@@ -9,4 +9,6 @@ interface MovieRepository {
 
     suspend fun getMovie(id : Int) : MovieDetail
 
+    suspend fun getSimilarMovies(id: Int) : List<Movie>
+
 }

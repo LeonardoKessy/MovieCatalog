@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,13 +38,15 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.seminario.moviecatalog.R
+import com.seminario.moviecatalog.domain.model.Movie
 import com.seminario.moviecatalog.domain.model.MovieDetail
 import com.seminario.moviecatalog.ui.mock.MockData
 import com.seminario.moviecatalog.ui.theme.MovieCatalogTheme
 
 @Composable
 fun DetailContent(
-    movie : MovieDetail
+    movie : MovieDetail,
+    similarMovies: List<Movie>
 ) {
     val scrollState = rememberScrollState()
 
@@ -96,7 +100,7 @@ fun DetailContent(
                     )
             ) {
                 Icon(
-                    imageVector = androidx.compose.material.icons.Icons.Default.Star,
+                    imageVector = Icons.Default.Star,
                     contentDescription = "Rating icon",
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
@@ -112,24 +116,38 @@ fun DetailContent(
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(R.string.genres) + ":",
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.titleMedium,
-            )
 
-            Text(
-                text = movie.genres.joinToString(", "),
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.bodyMedium,
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Column (
                 modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Start
-            )
+                    .weight(.7f, fill = false)
+            ) {
+                Text(
+                    text = stringResource(R.string.genres) + ":",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+
+                Text(
+                    text = movie.genres.joinToString(", "),
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Start
+                )
+            }
+
+           DetailActionButtons(
+               movieTitle = movie.title,
+               movieOverview = movie.overview,
+               homepageUrl = movie.homepageUrl
+           )
         }
 
         Column(
@@ -191,7 +209,8 @@ fun DetailContent(
 fun DetailContentPreview() {
     MovieCatalogTheme {
         DetailContent(
-            movie = MockData.movieDetail
+            movie = MockData.movieDetail,
+            similarMovies = MockData.movies
         )
     }
 }
